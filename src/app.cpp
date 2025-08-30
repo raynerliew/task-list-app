@@ -104,11 +104,12 @@ void App::addTask() {
     std::cout << "Enter title: ";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin, title);
+    testTask->setTitle(title);
 
     std::string description = "";
     std::cout << "Enter description: ";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin, description);
+    testTask->setDescription(description);
 
     std::string dueDate = "";
     while (true) {
@@ -121,8 +122,6 @@ void App::addTask() {
         std::cout << "Error: Invalid date format. Please try again.\n";
     }
 
-    testTask->setTitle(title);
-    testTask->setDescription(description);
     testTask->setDueDate(dueDate);
     m_taskList.push_back(testTask);
 
@@ -178,7 +177,7 @@ void App::editTask() {
         }
 
         case 3: {
-            std::cout << "Current description: " << selectedTask->getTitle() << "\n";
+            std::cout << "Current description: " << selectedTask->getDescription() << "\n";
             std::cout << "Please enter a new description: ";
 
             std::string newDescription = "";
@@ -191,9 +190,8 @@ void App::editTask() {
         }
 
         case 4: {
-            std::cout << "Current due date: " << selectedTask->getTitle() << "\n";
+            std::cout << "Current due date: " << selectedTask->getDueDate() << "\n";
             std::cout << "Please enter a new due date: ";
-
             
             std::string newDueDate = "";
             while (true) {
