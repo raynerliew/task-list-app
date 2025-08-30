@@ -2,12 +2,11 @@
 
 #include "app.h"
 
-using std::cin;
-using std::cout;
-
 int main() {
     App taskListApp;
     taskListApp.run();
+
+    std::cout << "Thanks for using task-list-app! Goodbye!\n";
 
     return 0;
 }
