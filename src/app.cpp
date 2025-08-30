@@ -102,11 +102,13 @@ void App::addTask() {
 
     std::string title = "";
     std::cout << "Enter title: ";
-    std::cin >> title;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, title);
 
     std::string description = "";
     std::cout << "Enter description: ";
-    std::cin >> description;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, description);
 
     std::string dueDate = "";
     while (true) {
@@ -151,6 +153,9 @@ void App::editTask() {
     int response = getIntInputInRange(0, 5);
 
     switch (response) {
+        case 0:
+            break;
+
         case 1: {
             if (selectedTask->getCompletionStatus()) {
                 std::cout << "This task is already completed.\n\n";
@@ -161,11 +166,14 @@ void App::editTask() {
 
             break;
         }
+        
         case 2: {
             std::cout << "Current title: " << selectedTask->getTitle() << "\n";
             std::cout << "Please enter a new title: ";
+
             std::string newTitle = "";
-            std::cin >> newTitle;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::getline(std::cin, newTitle);
 
             selectedTask->setTitle(newTitle);
             std::cout << "The title has been updated.\n\n";
