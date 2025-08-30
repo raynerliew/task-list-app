@@ -5,12 +5,32 @@
 
 Task::Task()
     : m_id(-1)
+    , m_title("")
+    , m_description("")
     , m_dateCreated("")
     , m_timeCreated("")
     , m_dueDate("")
-    , m_description("")
     , m_isCompleted(false) {
 
+}
+
+void Task::show() {
+}
+
+void Task::setTitle(const std::string& title) {
+    m_title = title;
+}
+
+std::string Task::getTitle() const {
+    return m_title;
+}
+
+void Task::setDescription(const std::string& description) {
+    m_description = description;
+}
+
+std::string Task::getDescription() const {
+    return m_description;
 }
 
 void Task::setDateCreated(const std::string& dateCreated) {
@@ -35,14 +55,6 @@ void Task::setDueDate(const std::string& dueDate) {
 
 std::string Task::getDueDate() const {
     return m_dueDate;
-}
-
-void Task::setDescription(const std::string& description) {
-    m_description = description;
-}
-
-std::string Task::getDescription() const {
-    return m_description;
 }
 
 void Task::addTag(const std::string& tag) {
