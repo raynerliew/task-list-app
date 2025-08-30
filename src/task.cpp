@@ -1,5 +1,6 @@
 #include "task.h"
 
+#include <iostream>
 #include <algorithm>
 
 Task::Task()
@@ -45,8 +46,11 @@ std::string Task::getDescription() const {
 }
 
 void Task::addTag(const std::string& tag) {
-    // TODO: Prevent duplicate tags
-    // ...
+    // Prevent duplicate tags
+    if (std::find(m_tags.begin(), m_tags.end(), tag) != m_tags.end()) {
+        std::cout << "Error: This tag already exists\n";
+        return;
+    }
 
     m_tags.push_back(tag);
 }

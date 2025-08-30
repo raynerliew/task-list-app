@@ -22,9 +22,9 @@ public:
 
     void addTag(const std::string& tag);
     void removeTag(const std::string& tag);
-    std::vector<std::string> getTags() const;
+    const std::vector<std::string>& getTags() const;
 
-    void setCompletionStatus(bool completed);
+    void setCompletionStatus(bool isCompleted);
     bool getCompletionStatus() const;
 
 private:
