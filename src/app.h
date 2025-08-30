@@ -13,8 +13,12 @@ public:
 
 private:
     int showMainMenu();
-    void showAllTasks();
+    void showAllTasks(bool showTitleOnly = false);
     void addTask();
+    void editTask();
+
+    // Helper functions
+    int getIntInputInRange(int min, int max);
 
     std::vector<Task*> m_taskList;
 };

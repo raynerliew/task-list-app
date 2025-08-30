@@ -8,7 +8,7 @@ public:
     Task();
     ~Task() = default;
 
-    void show();
+    void show(bool showTitleOnly = false);
 
     void setTitle(const std::string& title);
     std::string getTitle() const;
@@ -31,7 +31,7 @@ public:
 
 private:
     void setDateAndTimeCreated();
-    
+
     int m_id;
     
     std::string m_title;

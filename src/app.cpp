@@ -22,6 +22,13 @@ void App::run() {
     // TODO: Create user
     // ..
 
+    // For testing
+    Task* testTask = new Task();
+    testTask->setTitle("Test task");
+    testTask->setDescription("bla bla bla la la la");
+    testTask->setDueDate("01-01-2025");
+    m_taskList.push_back(testTask);
+
     while (true) {
         int response = showMainMenu();
 
@@ -38,9 +45,13 @@ void App::run() {
         case 2:
             addTask();
             break;
+
+        case 3:
+            editTask();
+            break;
         
         default:
-            std::cout << "That feature has not been implemented yet.\n\n";
+            std::cout << "Sorry, that feature has not been implemented yet.\n\n";
             break;
         }
     }
@@ -51,43 +62,36 @@ int App::showMainMenu() {
         std::cout << "Hello! Welcome to task-list-app. Enter a number to choose your option:\n";
         std::cout << "[1] Show all tasks\n";
         std::cout << "[2] Create a task\n";
-        std::cout << "[3] Delete a task\n";
-        std::cout << "[4] Edit a task\n";
+        std::cout << "[3] Edit a task\n";
+        std::cout << "[4] Delete a task\n";
         std::cout << "[5] Create a tag\n";
         std::cout << "[6] Sort tasks\n";
         std::cout << "[7] Filter tasks\n";
         std::cout << "[8] Search for tasks\n";
         std::cout << "[0] Exit\n";
 
-        int response = -1;
-        std::cin >> response;
-
-        if (std::cin.fail()) {
-            // Invalid input, clear the error flag and discard the input
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-            std::cout << "Error: Invalid input. Please enter an integer.\n\n";
-            continue;
-        }
-
-        if (response < 0 || response > 7) {
-            std::cout << "Error: Invalid input. Please enter an integer between 1 and 7.\n\n";
-            continue;
-        }
-
-        return response;
+        return getIntInputInRange(0, 8);
     }
 }
 
-void App::showAllTasks() {
+void App::showAllTasks(bool showTitleOnly) {
     if (m_taskList.empty()) {
         std::cout << "No tasks have been created yet.\n\n";
     }
 
-    for (auto task : m_taskList) {
-        task->show();
-        std::cout << "\n";
+    if (!showTitleOnly) {
+        std::cout << "----- Show all tasks -----\n";
+    }
+
+    for (int i = 1; i <= m_taskList.size(); ++i) {
+        if (showTitleOnly) {
+            std::cout << "[" << i << "] ";
+        }
+
+        m_taskList.at(i - 1)->show(showTitleOnly);
+
+        if (!showTitleOnly)
+            std::cout << "\n";
     }
 }
 
@@ -124,4 +128,38 @@ void App::addTask() {
     m_taskList.push_back(testTask);
 
     std::cout << "The task has been added.\n\n";
+}
+
+void App::editTask() {
+    std::cout << "----- Edit a task -----\n";
+
+    const bool showTitleOnly = true;
+    showAllTasks(showTitleOnly);
+    
+    std::cout << "\n";
+    std::cout << "Please select a task number to edit: ";
+    int response = getIntInputInRange(1, m_taskList.size());
+}
+
+int App::getIntInputInRange(int min, int max) {
+    while (true) {
+        int response = -1;
+        std::cin >> response;
+
+        if (std::cin.fail()) {
+            // Invalid input, clear the error flag and discard the input
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            std::cout << "Error: Invalid input. Please enter an integer.\n\n";
+            continue;
+        }
+
+        if (response < 0 || response > 7) {
+            std::cout << "Error: Invalid input. Please enter an integer between " << min << " and " << max << ".\n";
+            continue;
+        }
+
+        return response;
+    }
 }

@@ -15,15 +15,20 @@ Task::Task()
     setDateAndTimeCreated();
 }
 
-void Task::show() {
-    std::cout << "#################################\n";
-    std::cout << "<Created on " << m_dateCreated << " at " << m_timeCreated << "> " << m_title << "\n";
-    std::cout << m_description << "\n\n";
-    std::cout << "Due date: " << m_dueDate << "\n";
+void Task::show(bool showTitleOnly) {
+    if (showTitleOnly) {
+        std::cout << m_title << "\n";
+    }
+    else {
+        std::cout << "#################################\n";
+        std::cout << "<Created on " << m_dateCreated << " at " << m_timeCreated << "> " << m_title << "\n";
+        std::cout << m_description << "\n\n";
+        std::cout << "Due date: " << m_dueDate << "\n";
 
-    std::string completionStatusText = m_isCompleted ? "Completed" : "Incomplete";
-    std::cout << "Completion status: " << completionStatusText << "\n";
-    std::cout << "#################################\n";
+        std::string completionStatusText = m_isCompleted ? "Completed" : "Incomplete";
+        std::cout << "Completion status: " << completionStatusText << "\n";
+        std::cout << "#################################\n";
+    }
 }
 
 void Task::setTitle(const std::string& title) {
