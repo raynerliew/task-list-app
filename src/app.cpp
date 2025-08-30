@@ -93,6 +93,7 @@ int App::showMainMenu() {
 void App::showAllTasks(bool showTitleOnly) {
     if (m_taskList.empty()) {
         std::cout << "No tasks have been created yet.\n\n";
+        return;
     }
 
     if (!showTitleOnly) {
@@ -150,6 +151,10 @@ void App::editTask() {
 
     const bool showTitleOnly = true;
     showAllTasks(showTitleOnly);
+
+    if (m_taskList.empty()) {
+        return;
+    }
     
     std::cout << "Please select a task number to edit: ";
     int selectedTaskIndex = getIntInputInRange(1, m_taskList.size());
