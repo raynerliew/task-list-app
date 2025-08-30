@@ -61,6 +61,10 @@ void App::run() {
             deleteTask();
             break;
         
+        case 5:
+            createTag();
+            break;
+
         default:
             std::cout << "Sorry, that feature has not been implemented yet.\n\n";
             break;
@@ -251,6 +255,9 @@ void App::editTask() {
                     std::cout << "[" << i << "] " << m_availableTags.at(i - 1) << "\n";
                 }
 
+                // TODO: Prevent user from adding duplicate tags
+                // ...
+
                 std::cout << "Enter a number to choose a tag to add to this task: ";
                 int selectedTagIndex = getIntInputInRange(1, m_availableTags.size());
                 
@@ -293,7 +300,7 @@ void App::editTask() {
 }
 
 void App::deleteTask() {
-    std::cout << "----- Edit a task -----\n";
+    std::cout << "----- Delete a task -----\n";
     
     if (m_taskList.empty()) {
         std::cout << "There are no tasks to delete.\n\n";
@@ -310,6 +317,25 @@ void App::deleteTask() {
     m_taskList.erase(m_taskList.begin() + selectedTaskIndex);
 
     std::cout << "The task has been deleted.\n\n";
+}
+
+void App::createTag() {
+    std::cout << "----- Create a tag -----\n";
+
+    std::cout << "Existing tags:\n";
+    for (int i = 1; i <= m_availableTags.size(); ++i) {
+        std::cout << "[" << i << "] " << m_availableTags.at(i - 1) << "\n";
+    }
+
+    std::string newTag = "";
+    std::cout << "Enter new tag name: ";
+    std::cin >> newTag;
+
+    // TODO: Prevent duplicate tags from existing
+    // ...
+
+    m_availableTags.push_back(newTag);
+    std::cout << "The tag has been created.\n\n";
 }
 
 bool App::isInputCorrectDateFormat(const std::string& input) {
