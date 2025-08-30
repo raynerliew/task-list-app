@@ -91,13 +91,13 @@ int App::showMainMenu() {
 }
 
 void App::showAllTasks(bool showTitleOnly) {
+    if (!showTitleOnly) {
+        std::cout << "----- Show all tasks -----\n";
+    }
+
     if (m_taskList.empty()) {
         std::cout << "No tasks have been created yet.\n\n";
         return;
-    }
-
-    if (!showTitleOnly) {
-        std::cout << "----- Show all tasks -----\n";
     }
 
     for (int i = 1; i <= m_taskList.size(); ++i) {
