@@ -7,12 +7,14 @@ class Task;
 class App {
 public:
     App();
-    ~App() = default;
+    ~App();
 
     void run();
 
 private:
     int showMainMenu();
+    void showAllTasks();
+    void addTask();
 
     std::vector<Task*> m_taskList;
 };
