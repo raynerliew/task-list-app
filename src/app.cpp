@@ -141,7 +141,7 @@ void App::editTask() {
     int response = getIntInputInRange(1, m_taskList.size());
 }
 
-int App::getIntInputInRange(int min, int max) {
+int App::getIntInputInRange(int min, int max) const {
     while (true) {
         int response = -1;
         std::cin >> response;

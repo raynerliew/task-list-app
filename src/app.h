@@ -18,7 +18,7 @@ private:
     void editTask();
 
     // Helper functions
-    int getIntInputInRange(int min, int max);
+    int getIntInputInRange(int min, int max) const;
 
     std::vector<Task*> m_taskList;
 };
