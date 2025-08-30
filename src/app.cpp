@@ -36,8 +36,7 @@ void App::run() {
             break;
         }
 
-        switch (response)
-        {
+        switch (response) {
         case 1:
             showAllTasks();
             break;
@@ -100,15 +99,15 @@ void App::addTask() {
 
     std::cout << "----- Create a task -----\n";
 
-    std::string title;
+    std::string title = "";
     std::cout << "Enter title: ";
     std::cin >> title;
 
-    std::string description;
+    std::string description = "";
     std::cout << "Enter description: ";
     std::cin >> description;
 
-    std::string dueDate;
+    std::string dueDate = "";
     while (true) {
         // DD-MM-YYYY
         std::regex pattern(R"(^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(\d{4})$)");
@@ -138,7 +137,43 @@ void App::editTask() {
     
     std::cout << "\n";
     std::cout << "Please select a task number to edit: ";
-    int response = getIntInputInRange(1, m_taskList.size());
+    int selectedTaskIndex = getIntInputInRange(1, m_taskList.size());
+
+    std::cout << "----- Editing task -----\n";
+    std::cout << "[1] Mark this task as completed\n";
+    std::cout << "[2] Edit title\n";
+    std::cout << "[3] Edit description\n";
+    std::cout << "[4] Edit due date\n";
+    std::cout << "[5] Edit tags\n";
+    std::cout << "[0] Back\n";
+    std::cout << "Enter a number to choose your option: ";
+    int response = getIntInputInRange(0, 5);
+
+    switch (response) {
+        case 1: {
+            std::cout << "Current title: " << m_taskList.at(selectedTaskIndex)->getTitle() << "\n";
+            std::cout << "Please enter a new title: ";
+            std::string newTitle = "";
+            std::cin >> newTitle;
+            std::cout << "The title has been updated.\n\n";
+            break;
+        }
+        case 2:
+            break;
+
+        case 3:
+            break;
+
+        case 4:
+            break;
+
+        case 5:
+            break;
+        
+        default:
+            std::cout << "Sorry, that feature has not been implemented yet.\n\n";
+            break;
+    }
 }
 
 int App::getIntInputInRange(int min, int max) const {
@@ -151,15 +186,16 @@ int App::getIntInputInRange(int min, int max) const {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-            std::cout << "Error: Invalid input. Please enter an integer.\n\n";
+            std::cout << "Error: Invalid input. Please enter an integer: ";
             continue;
         }
 
-        if (response < 0 || response > 7) {
-            std::cout << "Error: Invalid input. Please enter an integer between " << min << " and " << max << ".\n";
+        if (response < min || response > max) {
+            std::cout << "Error: Invalid input. Please enter an integer between " << min << " and " << max << ": ";
             continue;
         }
 
+        std::cout << "\n";
         return response;
     }
 }
