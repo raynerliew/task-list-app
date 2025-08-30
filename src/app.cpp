@@ -112,13 +112,10 @@ void App::addTask() {
 
     std::string dueDate = "";
     while (true) {
-        // DD-MM-YYYY
-        std::regex pattern(R"(^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(\d{4})$)");
-
         std::cout << "Enter due date (DD-MM-YYYY): ";
         std::cin >> dueDate;
 
-        if (std::regex_match(dueDate, pattern))
+        if (isInputCorrectDateFormat(dueDate))
             break;
 
         std::cout << "Error: Invalid date format. Please try again.\n";
@@ -181,10 +178,35 @@ void App::editTask() {
         }
 
         case 3: {
+            std::cout << "Current description: " << selectedTask->getTitle() << "\n";
+            std::cout << "Please enter a new description: ";
+
+            std::string newDescription = "";
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::getline(std::cin, newDescription);
+
+            selectedTask->setDescription(newDescription);
+            std::cout << "The description has been updated.\n\n";
             break;
         }
 
         case 4: {
+            std::cout << "Current due date: " << selectedTask->getTitle() << "\n";
+            std::cout << "Please enter a new due date: ";
+
+            
+            std::string newDueDate = "";
+            while (true) {
+                std::cin >> newDueDate;
+                if (isInputCorrectDateFormat(newDueDate)) {
+                    break;
+                }
+
+                std::cout << "Error: Invalid date format. Please try again.\n";
+            }
+
+            selectedTask->setDueDate(newDueDate);
+            std::cout << "The due date has been updated.\n\n";
             break;
         }
 
@@ -196,6 +218,13 @@ void App::editTask() {
             std::cout << "Sorry, that feature has not been implemented yet.\n\n";
             break;
     }
+}
+
+bool App::isInputCorrectDateFormat(const std::string& input) {
+    // DD-MM-YYYY
+    std::regex pattern(R"(^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(\d{4})$)");
+
+    return std::regex_match(input, pattern);
 }
 
 int App::getIntInputInRange(int min, int max) const {

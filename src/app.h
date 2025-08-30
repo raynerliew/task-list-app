@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 
 class Task;
@@ -18,6 +19,7 @@ private:
     void editTask();
 
     // Helper functions
+    bool isInputCorrectDateFormat(const std::string& input);
     int getIntInputInRange(int min, int max) const;
 
     std::vector<Task*> m_taskList;
