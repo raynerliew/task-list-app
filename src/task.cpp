@@ -25,8 +25,7 @@ void Task::show(bool showTitleOnly) {
         std::cout << m_description << "\n\n";
         std::cout << "Due date: " << m_dueDate << "\n";
 
-        std::string completionStatusText = m_isCompleted ? "Completed" : "Incomplete";
-        std::cout << "Completion status: " << completionStatusText << "\n";
+        std::cout << "Completion status: " << getCompletionStatusString() << "\n";
         std::cout << "#################################\n";
     }
 }
@@ -105,4 +104,8 @@ void Task::setCompletionStatus(bool isCompleted) {
 
 bool Task::getCompletionStatus() const {
     return m_isCompleted;
+}
+
+std::string Task::getCompletionStatusString() const {
+    return m_isCompleted ? "Completed" : "Incomplete";
 }

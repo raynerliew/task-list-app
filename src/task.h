@@ -28,6 +28,7 @@ public:
 
     void setCompletionStatus(bool isCompleted);
     bool getCompletionStatus() const;
+    std::string getCompletionStatusString() const;
 
 private:
     void setDateAndTimeCreated();

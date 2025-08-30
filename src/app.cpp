@@ -58,7 +58,7 @@ void App::run() {
 
 int App::showMainMenu() {
     while (true) {
-        std::cout << "Hello! Welcome to task-list-app. Enter a number to choose your option:\n";
+        std::cout << "Hello! Welcome to task-list-app.\n";
         std::cout << "[1] Show all tasks\n";
         std::cout << "[2] Create a task\n";
         std::cout << "[3] Edit a task\n";
@@ -68,6 +68,7 @@ int App::showMainMenu() {
         std::cout << "[7] Filter tasks\n";
         std::cout << "[8] Search for tasks\n";
         std::cout << "[0] Exit\n";
+        std::cout << "Enter a number to choose your option: ";
 
         return getIntInputInRange(0, 8);
     }
@@ -135,9 +136,9 @@ void App::editTask() {
     const bool showTitleOnly = true;
     showAllTasks(showTitleOnly);
     
-    std::cout << "\n";
     std::cout << "Please select a task number to edit: ";
     int selectedTaskIndex = getIntInputInRange(1, m_taskList.size());
+    Task* selectedTask = m_taskList.at(selectedTaskIndex - 1);
 
     std::cout << "----- Editing task -----\n";
     std::cout << "[1] Mark this task as completed\n";
@@ -151,24 +152,37 @@ void App::editTask() {
 
     switch (response) {
         case 1: {
-            std::cout << "Current title: " << m_taskList.at(selectedTaskIndex)->getTitle() << "\n";
+            if (selectedTask->getCompletionStatus()) {
+                std::cout << "This task is already completed.\n\n";
+            } else {
+                selectedTask->setCompletionStatus(true);
+                std::cout << "This task has been marked as completed. Good job!\n\n";
+            }
+
+            break;
+        }
+        case 2: {
+            std::cout << "Current title: " << selectedTask->getTitle() << "\n";
             std::cout << "Please enter a new title: ";
             std::string newTitle = "";
             std::cin >> newTitle;
+
+            selectedTask->setTitle(newTitle);
             std::cout << "The title has been updated.\n\n";
             break;
         }
-        case 2:
-            break;
 
-        case 3:
+        case 3: {
             break;
+        }
 
-        case 4:
+        case 4: {
             break;
+        }
 
-        case 5:
+        case 5: {
             break;
+        }
         
         default:
             std::cout << "Sorry, that feature has not been implemented yet.\n\n";
