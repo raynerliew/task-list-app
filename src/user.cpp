@@ -9,6 +9,6 @@ void User::setName(const std::string& name) {
     m_name = name;
 }
 
-const std::string User::getName() const {
+std::string User::getName() const {
     return m_name;
 }
