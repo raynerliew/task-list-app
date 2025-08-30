@@ -6,7 +6,7 @@ int main() {
     App taskListApp;
     taskListApp.run();
 
-    std::cout << "Thanks for using task-list-app! Goodbye!\n";
+    std::cout << "Thank you for using task-list-app! Goodbye!\n";
 
     return 0;
 }

@@ -23,4 +23,5 @@ private:
     int getIntInputInRange(int min, int max) const;
 
     std::vector<Task*> m_taskList;
+    std::vector<std::string> m_availableTags;
 };

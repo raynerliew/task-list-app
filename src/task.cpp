@@ -26,6 +26,22 @@ void Task::show(bool showTitleOnly) {
         std::cout << "Due date: " << m_dueDate << "\n";
 
         std::cout << "Completion status: " << getCompletionStatusString() << "\n";
+        
+        std::cout << "Tags: ";
+        if (m_tags.empty()) {
+            std::cout << "None\n";
+        } else {
+            for (int i = 0; i < m_tags.size(); ++i) {
+                std::cout << "<" << m_tags.at(i) << ">";
+
+                if (i < m_tags.size() - 1) {
+                    std::cout << ", ";
+                }
+            }
+            
+            std::cout << "\n";
+        }
+
         std::cout << "#################################\n";
     }
 }

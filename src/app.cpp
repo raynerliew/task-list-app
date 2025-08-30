@@ -27,7 +27,15 @@ void App::run() {
     testTask->setTitle("Test task");
     testTask->setDescription("bla bla bla la la la");
     testTask->setDueDate("01-01-2025");
+    testTask->addTag("work");
+    testTask->addTag("test");
+    testTask->addTag("hello");
     m_taskList.push_back(testTask);
+
+    m_availableTags.push_back("aaa");
+    m_availableTags.push_back("bbb");
+    m_availableTags.push_back("ccc");
+    // End of testing
 
     while (true) {
         int response = showMainMenu();
@@ -128,6 +136,7 @@ void App::addTask() {
     std::cout << "The task has been added.\n\n";
 }
 
+// TODO: Make this function smaller
 void App::editTask() {
     std::cout << "----- Edit a task -----\n";
 
@@ -191,7 +200,7 @@ void App::editTask() {
 
         case 4: {
             std::cout << "Current due date: " << selectedTask->getDueDate() << "\n";
-            std::cout << "Please enter a new due date: ";
+            std::cout << "Please enter a new due date (DD-MM-YYYY): ";
             
             std::string newDueDate = "";
             while (true) {
@@ -209,6 +218,33 @@ void App::editTask() {
         }
 
         case 5: {
+            std::cout << "This task has the following tags:\n";
+            for (int i = 0; i < selectedTask->getTags().size(); ++i) {
+                std::string tag = selectedTask->getTags().at(i);
+                std::cout << "<" << tag << ">";
+
+                if (i < selectedTask->getTags().size() - 1) {
+                    std::cout << ", ";
+                }
+            }
+
+            std::cout << "\n\n";
+
+            if (m_availableTags.empty()) {
+                std::cout << "There are no available tags to add.\n\n";
+            } else {
+                std::cout << "Available tags to add:\n";
+                for (int i = 1; i <= m_availableTags.size(); ++i) {
+                    std::cout << "[" << i << "] " << m_availableTags.at(i - 1) << "\n";
+                }
+
+                std::cout << "Enter a number to choose a tag to add to this task: ";
+                int selectedTagIndex = getIntInputInRange(1, m_availableTags.size());
+                
+                selectedTask->addTag(m_availableTags.at(selectedTagIndex - 1));
+                std::cout << "The tag has been added to this task.\n\n";
+            }
+
             break;
         }
         
