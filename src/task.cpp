@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <ctime>
 
 Task::Task()
     : m_id(-1)
@@ -11,10 +12,18 @@ Task::Task()
     , m_timeCreated("")
     , m_dueDate("")
     , m_isCompleted(false) {
-
+    setDateAndTimeCreated();
 }
 
 void Task::show() {
+    std::cout << "#################################\n";
+    std::cout << "<Created on " << m_dateCreated << " at " << m_timeCreated << "> " << m_title << "\n";
+    std::cout << m_description << "\n\n";
+    std::cout << "Due date: " << m_dueDate << "\n";
+
+    std::string completionStatusText = m_isCompleted ? "Completed" : "Incomplete";
+    std::cout << "Completion status: " << completionStatusText << "\n";
+    std::cout << "#################################\n";
 }
 
 void Task::setTitle(const std::string& title) {
@@ -33,16 +42,23 @@ std::string Task::getDescription() const {
     return m_description;
 }
 
-void Task::setDateCreated(const std::string& dateCreated) {
-    m_dateCreated = dateCreated;
+void Task::setDateAndTimeCreated() {
+    std::time_t now = std::time(nullptr);
+    std::tm local_tm;
+    localtime_s(&local_tm, &now);
+
+    char dateBuffer[11]; // DD-MM-YYYY
+    char timeBuffer[9]; // "HH:MM:SS"
+
+    std::strftime(dateBuffer, sizeof(dateBuffer), "%d-%m-%Y", &local_tm);
+    std::strftime(timeBuffer, sizeof(timeBuffer), "%H:%M:%S", &local_tm);
+
+    m_dateCreated = dateBuffer;
+    m_timeCreated = timeBuffer;
 }
 
 std::string Task::getDateCreated() const {
     return m_dateCreated;
-}
-
-void Task::setTimeCreated(const std::string& timeCreated) {
-    m_timeCreated = timeCreated;
 }
 
 std::string Task::getTimeCreated() const {

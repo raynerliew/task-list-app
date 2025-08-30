@@ -16,10 +16,7 @@ public:
     void setDescription(const std::string& description);
     std::string getDescription() const;
 
-    void setDateCreated(const std::string& dateCreated);
     std::string getDateCreated() const;
-
-    void setTimeCreated(const std::string& timeCreated);
     std::string getTimeCreated() const;
 
     void setDueDate(const std::string& dueDate);
@@ -33,6 +30,8 @@ public:
     bool getCompletionStatus() const;
 
 private:
+    void setDateAndTimeCreated();
+    
     int m_id;
     
     std::string m_title;
