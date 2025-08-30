@@ -229,10 +229,19 @@ void App::editTask() {
             }
 
             std::cout << "\n\n";
+            std::cout << "[1] Add a tag to this task\n";
+            std::cout << "[2] Remove a tag from this task\n";
+            std::cout << "Enter a number to choose your option: ";
+            int response2 = getIntInputInRange(1, 2);
 
-            if (m_availableTags.empty()) {
-                std::cout << "There are no available tags to add.\n\n";
-            } else {
+            switch (response2)
+            {
+            case 1: {
+                if (m_availableTags.empty()) {
+                    std::cout << "There are no available tags to add.\n\n";
+                    break;
+                }
+
                 std::cout << "Available tags to add:\n";
                 for (int i = 1; i <= m_availableTags.size(); ++i) {
                     std::cout << "[" << i << "] " << m_availableTags.at(i - 1) << "\n";
@@ -243,6 +252,31 @@ void App::editTask() {
                 
                 selectedTask->addTag(m_availableTags.at(selectedTagIndex - 1));
                 std::cout << "The tag has been added to this task.\n\n";
+                
+                break;
+            }
+
+            case 2: {
+                if (selectedTask->getTags().empty()) {
+                    std::cout << "This task has no tags to remove.\n";
+                    break;
+                }
+
+                std::cout << "Available tags to remove:\n";
+                for (int i = 1; i <= selectedTask->getTags().size(); ++i) {
+                    std::cout << "[" << i << "] " << selectedTask->getTags().at(i - 1) << "\n";
+                }
+
+                std::cout << "Enter a number to choose a tag to remove from this task: ";
+                int selectedTagIndex = getIntInputInRange(1, selectedTask->getTags().size());
+                selectedTask->removeTag(selectedTask->getTags().at(selectedTagIndex - 1));
+                std::cout << "The tag has been removed from this task.\n\n";
+
+                break;
+            }
+
+            default:
+                break;
             }
 
             break;
