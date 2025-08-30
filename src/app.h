@@ -17,6 +17,7 @@ private:
     void showAllTasks(bool showTitleOnly = false);
     void addTask();
     void editTask();
+    void deleteTask();
 
     // Helper functions
     bool isInputCorrectDateFormat(const std::string& input);

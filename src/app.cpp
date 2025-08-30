@@ -56,6 +56,10 @@ void App::run() {
         case 3:
             editTask();
             break;
+
+        case 4:
+            deleteTask();
+            break;
         
         default:
             std::cout << "Sorry, that feature has not been implemented yet.\n\n";
@@ -268,8 +272,8 @@ void App::editTask() {
                 }
 
                 std::cout << "Enter a number to choose a tag to remove from this task: ";
-                int selectedTagIndex = getIntInputInRange(1, selectedTask->getTags().size());
-                selectedTask->removeTag(selectedTask->getTags().at(selectedTagIndex - 1));
+                int selectedTagIndex = getIntInputInRange(1, selectedTask->getTags().size()) - 1;
+                selectedTask->removeTag(selectedTask->getTags().at(selectedTagIndex));
                 std::cout << "The tag has been removed from this task.\n\n";
 
                 break;
@@ -286,6 +290,26 @@ void App::editTask() {
             std::cout << "Sorry, that feature has not been implemented yet.\n\n";
             break;
     }
+}
+
+void App::deleteTask() {
+    std::cout << "----- Edit a task -----\n";
+    
+    if (m_taskList.empty()) {
+        std::cout << "There are no tasks to delete.\n\n";
+        return;
+    }
+
+    for (int i = 1; i <= m_taskList.size(); ++i) {
+        std::cout << "[" << i << "] " << m_taskList.at(i - 1)->getTitle() << "\n";
+    }
+
+    std::cout << "Enter a number to choose a task to delete: ";
+    int selectedTaskIndex = getIntInputInRange(1, m_taskList.size()) - 1;
+    delete m_taskList[selectedTaskIndex];
+    m_taskList.erase(m_taskList.begin() + selectedTaskIndex);
+
+    std::cout << "The task has been deleted.\n\n";
 }
 
 bool App::isInputCorrectDateFormat(const std::string& input) {
