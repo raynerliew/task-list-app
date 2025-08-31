@@ -86,6 +86,10 @@ void App::run() {
             sortTasks();
             break;
 
+        case 7:
+            filterTasks();
+            break;
+
         default:
             std::cout << "Sorry, that feature has not been implemented yet.\n\n";
             break;
@@ -267,65 +271,64 @@ void App::editTask() {
             std::cout << "Enter a number to choose your option: ";
             int response2 = getIntInputInRange(1, 2);
 
-            switch (response2)
-            {
-            case 1: {
-                if (m_availableTags.empty()) {
-                    std::cout << "There are no available tags to add.\n\n";
-                    break;
-                }
-
-                const std::vector<std::string>& selectedTaskTags = selectedTask->getTags();
-                std::vector<std::string> unusedTags;
-
-                for (const auto& tag : m_availableTags) {
-                    // Filter tags that are not added to this task
-                    if (std::find(selectedTaskTags.begin(),
-                                  selectedTaskTags.end(),
-                                  tag) == selectedTaskTags.end()) {
-                        unusedTags.push_back(tag);
+            switch (response2) {
+                case 1: {
+                    if (m_availableTags.empty()) {
+                        std::cout << "There are no available tags to add.\n\n";
+                        break;
                     }
-                }
 
-                if (unusedTags.empty()) {
-                    std::cout << "All available tags are already added to this task.\n\n";
+                    const std::vector<std::string>& selectedTaskTags = selectedTask->getTags();
+                    std::vector<std::string> unusedTags;
+
+                    for (const auto& tag : m_availableTags) {
+                        // Filter tags that are not added to this task
+                        if (std::find(selectedTaskTags.begin(),
+                                    selectedTaskTags.end(),
+                                    tag) == selectedTaskTags.end()) {
+                            unusedTags.push_back(tag);
+                        }
+                    }
+
+                    if (unusedTags.empty()) {
+                        std::cout << "All available tags are already added to this task.\n\n";
+                        break;
+                    }
+
+                    std::cout << "Available tags to add:\n";
+                    for (int i = 1; i <= unusedTags.size(); ++i) {
+                        std::cout << "[" << i << "] " << unusedTags.at(i - 1) << "\n";
+                    }
+
+                    std::cout << "Enter a number to choose a tag to add to this task: ";
+                    int selectedTagIndex = getIntInputInRange(1, unusedTags.size()) - 1;
+                    selectedTask->addTag(unusedTags.at(selectedTagIndex));
+                    std::cout << "The tag has been added to this task.\n\n";
+                    
                     break;
                 }
 
-                std::cout << "Available tags to add:\n";
-                for (int i = 1; i <= unusedTags.size(); ++i) {
-                    std::cout << "[" << i << "] " << unusedTags.at(i - 1) << "\n";
-                }
+                case 2: {
+                    if (selectedTask->getTags().empty()) {
+                        std::cout << "This task has no tags to remove.\n";
+                        break;
+                    }
 
-                std::cout << "Enter a number to choose a tag to add to this task: ";
-                int selectedTagIndex = getIntInputInRange(1, unusedTags.size()) - 1;
-                selectedTask->addTag(unusedTags.at(selectedTagIndex));
-                std::cout << "The tag has been added to this task.\n\n";
-                
-                break;
-            }
+                    std::cout << "Available tags to remove:\n";
+                    for (int i = 1; i <= selectedTask->getTags().size(); ++i) {
+                        std::cout << "[" << i << "] " << selectedTask->getTags().at(i - 1) << "\n";
+                    }
 
-            case 2: {
-                if (selectedTask->getTags().empty()) {
-                    std::cout << "This task has no tags to remove.\n";
+                    std::cout << "Enter a number to choose a tag to remove from this task: ";
+                    int selectedTagIndex = getIntInputInRange(1, selectedTask->getTags().size()) - 1;
+                    selectedTask->removeTag(selectedTask->getTags().at(selectedTagIndex));
+                    std::cout << "The tag has been removed from this task.\n\n";
+
                     break;
                 }
 
-                std::cout << "Available tags to remove:\n";
-                for (int i = 1; i <= selectedTask->getTags().size(); ++i) {
-                    std::cout << "[" << i << "] " << selectedTask->getTags().at(i - 1) << "\n";
-                }
-
-                std::cout << "Enter a number to choose a tag to remove from this task: ";
-                int selectedTagIndex = getIntInputInRange(1, selectedTask->getTags().size()) - 1;
-                selectedTask->removeTag(selectedTask->getTags().at(selectedTagIndex));
-                std::cout << "The tag has been removed from this task.\n\n";
-
-                break;
-            }
-
-            default:
-                break;
+                default:
+                    break;
             }
 
             break;
@@ -392,32 +395,121 @@ void App::sortTasks() {
     std::cout << "Enter a number to choose your option: ";
     int response = getIntInputInRange(1, 2);
 
-    switch (response)
-    {
-    case 1: // Show incomplete tasks first
-        std::sort(m_taskList.begin(), m_taskList.end(),
-            [](Task* a, Task* b) {
-                return !a->isCompleted() && b->isCompleted();
-            });
-        break;
+    switch (response) {
+        case 1: // Show incomplete tasks first
+            std::sort(m_taskList.begin(), m_taskList.end(),
+                [](Task* a, Task* b) {
+                    return !a->isCompleted() && b->isCompleted();
+                });
+            break;
 
-    case 2: // Show tasks that are due earlier first
-        std::sort(m_taskList.begin(), m_taskList.end(),
-            [this](Task* a, Task* b) {
-                std::tm ta = parseDate(a->getDueDate());
-                std::tm tb = parseDate(b->getDueDate());
-                return std::mktime(&ta) < std::mktime(&tb);
-            });
-        break;
-    
-    default:
-        std::cout << "Sorry, that feature has not been implemented yet.\n\n";
-        break;
+        case 2: // Show tasks that are due earlier first
+            std::sort(m_taskList.begin(), m_taskList.end(),
+                [this](Task* a, Task* b) {
+                    std::tm ta = parseDate(a->getDueDate());
+                    std::tm tb = parseDate(b->getDueDate());
+                    return std::mktime(&ta) < std::mktime(&tb);
+                });
+            break;
+        
+        default:
+            std::cout << "Sorry, that feature has not been implemented yet.\n\n";
+            break;
     }
 
     std::cout << "The tasks have been sorted.\n";
     
     showAllTasks(false, false);
+}
+
+void App::filterTasks() {
+    std::cout << "----- Filter tasks -----\n";
+
+    std::cout << "\n";
+    std::cout << "[1] Filter by completion status\n";
+    std::cout << "[2] Filter by due date\n";
+    std::cout << "[3] Filter by tag\n";
+    std::cout << "Enter a number to choose your option: ";
+    int response = getIntInputInRange(1, 3);
+    std::vector<Task*> filteredTasks;
+
+    switch (response) {
+        case 1: {
+            std::cout << "Filters:\n";
+            std::cout << "[1] Incomplete\n";
+            std::cout << "[2] Complete\n";
+            std::cout << "Enter a number to choose your option: ";
+            int response2 = getIntInputInRange(1, 2);
+            bool criteria = (response2 == 1) ? false : true;
+
+            for (const auto& task : m_taskList) {
+                if (task->isCompleted() == criteria) {
+                    filteredTasks.push_back(task);
+                }
+            }
+
+            break;
+        }
+
+        case 2: {
+            std::string dueDateFilter = "";
+            while (true) {
+                std::cout << "Enter due date to filter (DD-MM-YYYY): ";
+                std::cin >> dueDateFilter;
+
+                if (isInputCorrectDateFormat(dueDateFilter))
+                    break;
+
+                std::cout << "Error: Invalid date format. Please try again.\n";
+            }
+
+            for (const auto& task : m_taskList) {
+                if (task->getDueDate() == dueDateFilter) {
+                    filteredTasks.push_back(task);
+                }
+            }
+            
+            break;
+        }
+
+        case 3: {
+            std::cout << "Filters:\n";
+            for (int i = 1; i <= m_availableTags.size(); ++i) {
+                std::cout << "[" << i << "] " << m_availableTags.at(i - 1) << "\n";
+            }
+
+            std::cout << "Enter a number to choose your option: ";
+            int selectedTagIndex = getIntInputInRange(1, m_availableTags.size()) - 1;
+            std::string tagFilter = m_availableTags.at(selectedTagIndex);
+            
+            for (const auto& task : m_taskList) {
+                const std::vector<std::string>& tags = task->getTags();
+                if (std::find(tags.begin(), tags.end(), tagFilter) != tags.end()) {
+                    filteredTasks.push_back(task);
+                }
+            }
+
+            break;
+        }
+        
+        default:
+            std::cout << "Sorry, that feature has not been implemented yet.\n\n";
+            break;
+    }
+
+    if (filteredTasks.empty()) {
+        std::cout << "\n";
+        std::cout << "No tasks match this filter\n\n";
+        return;
+    }
+
+    std::cout << "\n";
+    std::cout << "The tasks have been filtered.\n";
+
+    for (int i = 1; i <= filteredTasks.size(); ++i) {
+        filteredTasks.at(i - 1)->show();
+        std::cout << "\n";
+    }
 }
 
 bool App::isInputCorrectDateFormat(const std::string& input) {
