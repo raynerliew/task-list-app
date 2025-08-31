@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <limits>
-#include <regex> 
+#include <regex>
+#include <sstream>
+#include <iomanip>
 
 App::App() {
 
@@ -23,18 +25,33 @@ void App::run() {
     // ..
 
     // For testing
-    Task* testTask = new Task();
-    testTask->setTitle("Test task");
-    testTask->setDescription("bla bla bla la la la");
-    testTask->setDueDate("01-01-2025");
-    testTask->addTag("work");
-    testTask->addTag("test");
-    testTask->addTag("hello");
-    m_taskList.push_back(testTask);
+    Task* task1 = new Task();
+    task1->setTitle("Task 1");
+    task1->setDescription("I am task 1");
+    task1->setDueDate("01-01-2025");
+    task1->addTag("tag1");
+    task1->addTag("tag2");
+    task1->addTag("tag3");
+    task1->setCompletionStatus(true);
+    m_taskList.push_back(task1);
 
-    m_availableTags.push_back("aaa");
-    m_availableTags.push_back("bbb");
-    m_availableTags.push_back("ccc");
+    Task* task2 = new Task();
+    task2->setTitle("Task 2");
+    task2->setDescription("Task 2 is me");
+    task2->setDueDate("02-02-2025");
+    task2->addTag("tag2");
+    m_taskList.push_back(task2);
+
+    Task* task3 = new Task();
+    task3->setTitle("Task 3");
+    task3->setDescription("Task 3 here");
+    task3->setDueDate("03-03-2020");
+    task3->addTag("tag3");
+    m_taskList.push_back(task3);
+
+    m_availableTags.push_back("tag1");
+    m_availableTags.push_back("tag2");
+    m_availableTags.push_back("tag3");
     // End of testing
 
     while (true) {
@@ -65,6 +82,10 @@ void App::run() {
             createTag();
             break;
 
+        case 6:
+            sortTasks();
+            break;
+
         default:
             std::cout << "Sorry, that feature has not been implemented yet.\n\n";
             break;
@@ -90,8 +111,8 @@ int App::showMainMenu() {
     }
 }
 
-void App::showAllTasks(bool showTitleOnly) {
-    if (!showTitleOnly) {
+void App::showAllTasks(bool showTaskTitleOnly, bool showHeader) {
+    if (showHeader && !showTaskTitleOnly) {
         std::cout << "----- Show all tasks -----\n";
     }
 
@@ -101,13 +122,13 @@ void App::showAllTasks(bool showTitleOnly) {
     }
 
     for (int i = 1; i <= m_taskList.size(); ++i) {
-        if (showTitleOnly) {
+        if (showTaskTitleOnly) {
             std::cout << "[" << i << "] ";
         }
 
-        m_taskList.at(i - 1)->show(showTitleOnly);
+        m_taskList.at(i - 1)->show(showTaskTitleOnly);
 
-        if (!showTitleOnly)
+        if (!showTaskTitleOnly)
             std::cout << "\n";
     }
 }
@@ -149,8 +170,7 @@ void App::addTask() {
 void App::editTask() {
     std::cout << "----- Edit a task -----\n";
 
-    const bool showTitleOnly = true;
-    showAllTasks(showTitleOnly);
+    showAllTasks(true);
 
     if (m_taskList.empty()) {
         return;
@@ -175,7 +195,7 @@ void App::editTask() {
             break;
 
         case 1: {
-            if (selectedTask->getCompletionStatus()) {
+            if (selectedTask->isCompleted()) {
                 std::cout << "This task is already completed.\n\n";
             } else {
                 selectedTask->setCompletionStatus(true);
@@ -363,6 +383,43 @@ void App::createTag() {
     std::cout << "The tag has been created.\n\n";
 }
 
+void App::sortTasks() {
+    std::cout << "----- Sort tasks -----\n";
+
+    std::cout << "\n";
+    std::cout << "[1] Sort by completion status\n";
+    std::cout << "[2] Sort by due date\n";
+    std::cout << "Enter a number to choose your option: ";
+    int response = getIntInputInRange(1, 2);
+
+    switch (response)
+    {
+    case 1: // Show incomplete tasks first
+        std::sort(m_taskList.begin(), m_taskList.end(),
+            [](Task* a, Task* b) {
+                return !a->isCompleted() && b->isCompleted();
+            });
+        break;
+
+    case 2: // Show tasks that are due earlier first
+        std::sort(m_taskList.begin(), m_taskList.end(),
+            [this](Task* a, Task* b) {
+                std::tm ta = parseDate(a->getDueDate());
+                std::tm tb = parseDate(b->getDueDate());
+                return std::mktime(&ta) < std::mktime(&tb);
+            });
+        break;
+    
+    default:
+        std::cout << "Sorry, that feature has not been implemented yet.\n\n";
+        break;
+    }
+
+    std::cout << "The tasks have been sorted.\n";
+    
+    showAllTasks(false, false);
+}
+
 bool App::isInputCorrectDateFormat(const std::string& input) {
     // DD-MM-YYYY
     std::regex pattern(R"(^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(\d{4})$)");
@@ -392,4 +449,11 @@ int App::getIntInputInRange(int min, int max) const {
         std::cout << "\n";
         return response;
     }
+}
+
+std::tm App::parseDate(const std::string& date) {
+    std::tm tm = {};
+    std::istringstream ss(date);
+    ss >> std::get_time(&tm, "%d-%m-%Y");
+    return tm;
 }

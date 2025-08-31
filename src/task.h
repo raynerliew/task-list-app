@@ -27,7 +27,7 @@ public:
     const std::vector<std::string>& getTags() const;
 
     void setCompletionStatus(bool isCompleted);
-    bool getCompletionStatus() const;
+    bool isCompleted() const;
     std::string getCompletionStatusString() const;
 
 private:

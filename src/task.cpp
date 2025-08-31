@@ -20,7 +20,7 @@ void Task::show(bool showTitleOnly) {
         std::cout << m_title << "\n";
     }
     else {
-        std::cout << "#################################\n";
+        std::cout << "\n";
         std::cout << "<Created on " << m_dateCreated << " at " << m_timeCreated << "> " << m_title << "\n";
         std::cout << m_description << "\n\n";
         std::cout << "Due date: " << m_dueDate << "\n";
@@ -41,8 +41,6 @@ void Task::show(bool showTitleOnly) {
 
             std::cout << "\n";
         }
-
-        std::cout << "#################################\n";
     }
 }
 
@@ -112,7 +110,7 @@ void Task::setCompletionStatus(bool isCompleted) {
     m_isCompleted = isCompleted;
 }
 
-bool Task::getCompletionStatus() const {
+bool Task::isCompleted() const {
     return m_isCompleted;
 }
 
