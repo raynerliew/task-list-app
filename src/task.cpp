@@ -17,30 +17,31 @@ Task::Task()
 void Task::show(bool showTitleOnly) {
     if (showTitleOnly) {
         std::cout << m_title << "\n";
+        return;
     }
-    else {
-        std::cout << "\n";
-        std::cout << "<Created on " << m_dateCreated << " at " << m_timeCreated << "> " << m_title << "\n";
-        std::cout << m_description << "\n\n";
-        std::cout << "Due date: " << m_dueDate << "\n";
 
-        std::cout << "Completion status: " << getCompletionStatusString() << "\n";
-        
-        std::cout << "Tags: ";
-        if (m_tags.empty()) {
-            std::cout << "None\n";
-        } else {
-            for (int i = 0; i < m_tags.size(); ++i) {
-                std::cout << "<" << m_tags.at(i) << ">";
+    std::cout << "\n";
+    std::cout << "<Created on " << m_dateCreated << " at " << m_timeCreated << "> " << m_title << "\n";
+    std::cout << m_description << "\n\n";
+    std::cout << "Due date: " << m_dueDate << "\n";
 
-                if (i < m_tags.size() - 1) {
-                    std::cout << ", ";
-                }
-            }
+    std::cout << "Completion status: " << getCompletionStatusString() << "\n";
+    
+    std::cout << "Tags: ";
+    if (m_tags.empty()) {
+        std::cout << "None\n";
+        return;
+    }
 
-            std::cout << "\n";
+    for (int i = 0; i < m_tags.size(); ++i) {
+        std::cout << "<" << m_tags.at(i) << ">";
+
+        if (i < m_tags.size() - 1) {
+            std::cout << ", ";
         }
     }
+
+    std::cout << "\n";
 }
 
 void Task::setTitle(const std::string& title) {
@@ -95,9 +96,10 @@ void Task::addTag(const std::string& tag) {
 }
 
 void Task::removeTag(const std::string& tag) {
-    if (m_tags.empty())
+    if (m_tags.empty()) {
         return;
-
+    }
+    
     m_tags.erase(std::remove(m_tags.begin(), m_tags.end(), tag), m_tags.end());
 }
 
