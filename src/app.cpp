@@ -90,6 +90,10 @@ void App::run() {
             filterTasks();
             break;
 
+        case 8:
+            searchTasks();
+            break;
+
         default:
             std::cout << "Sorry, that feature has not been implemented yet.\n\n";
             break;
@@ -508,6 +512,47 @@ void App::filterTasks() {
 
     for (int i = 1; i <= filteredTasks.size(); ++i) {
         filteredTasks.at(i - 1)->show();
+        std::cout << "\n";
+    }
+}
+
+void App::searchTasks() {
+    std::cout << "----- Search tasks -----\n";
+
+    std::cout << "\n";
+    std::cout << "Enter a task title to search for: ";
+    std::string titleToSearch;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, titleToSearch);
+
+    // Function to convert characters to lowercase
+    auto toLower = [](std::string s) {
+        std::transform(s.begin(), s.end(), s.begin(),
+                    [](unsigned char c){ return std::tolower(c); });
+        return s;
+    };
+
+    titleToSearch = toLower(titleToSearch);
+    std::vector<Task*> foundTasks;
+
+    for (Task* task : m_taskList) {
+        std::string title = toLower(task->getTitle());
+        if (title.find(titleToSearch) != std::string::npos) {
+            foundTasks.push_back(task);
+        }
+    }
+
+    if (foundTasks.empty()) {
+        std::cout << "\n";
+        std::cout << "No tasks match this search query.\n\n";
+        return;
+    }
+
+    std::cout << "\n";
+    std::cout << "The tasks have been searched.\n";
+
+    for (int i = 1; i <= foundTasks.size(); ++i) {
+        foundTasks.at(i - 1)->show();
         std::cout << "\n";
     }
 }

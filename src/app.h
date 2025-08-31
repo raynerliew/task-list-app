@@ -22,6 +22,7 @@ private:
     void createTag();
     void sortTasks();
     void filterTasks();
+    void searchTasks();
 
     // Helper functions
     bool isInputCorrectDateFormat(const std::string& input);
