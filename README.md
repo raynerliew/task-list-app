@@ -5,6 +5,7 @@ Programming language used: C++
 This is a simple task list application that allows users to keep track of their tasks.
 
 A task contains:
+- Date and time created
 - Title
 - Description
 - Due date
