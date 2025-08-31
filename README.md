@@ -61,7 +61,14 @@ task-list-app/
 - Windows 10/11
 
 ### Build and Run
-1. Open the command prompt and navigate to the project's root directory<br>
+
+#### Not Using The Command Prompt
+1. Double click the build.bat batch file located in the project's root directory
+2. The executable will be created in the build/ folder and launched automatically
+
+#### Using The Command Prompt
+
+1. Open a command prompt and navigate to the project's root directory<br>
 ```
 cd task-list-app
 ```
@@ -71,7 +78,7 @@ cd task-list-app
 build.bat
 ```
 
-The executable will be created in the build/ folder and launched automatically.
+The executable will be created in the build/ folder and launched automatically
 
 
 ## Testing
