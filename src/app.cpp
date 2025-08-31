@@ -92,7 +92,7 @@ void App::run() {
             break;
 
         default:
-            std::cout << "Sorry, that feature has not been implemented yet.\n\n";
+            std::cout << "Error: Invalid input.\n\n";
             break;
         }
     }
@@ -171,7 +171,6 @@ void App::addTask() {
     std::cout << "The task has been added.\n\n";
 }
 
-// TODO: Make this function smaller
 void App::editTask() {
     std::cout << "----- Edit a task -----\n";
 
@@ -196,147 +195,158 @@ void App::editTask() {
     int response = getIntInputInRange(0, 5);
 
     switch (response) {
-        case 0:
+        case 0: // Back
             break;
 
-        case 1: {
+        case 1:
             if (selectedTask->isCompleted()) {
                 std::cout << "This task is already completed.\n\n";
-            } else {
-                selectedTask->setCompletionStatus(true);
-                std::cout << "This task has been marked as completed. Good job!\n\n";
+                break;
             }
 
+            selectedTask->setCompletionStatus(true);
+            std::cout << "This task has been marked as completed. Good job!\n\n";
             break;
-        }
         
-        case 2: {
-            std::cout << "Current title: " << selectedTask->getTitle() << "\n";
-            std::cout << "Please enter a new title: ";
-
-            std::string newTitle = "";
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::getline(std::cin, newTitle);
-
-            selectedTask->setTitle(newTitle);
-            std::cout << "The title has been updated.\n\n";
+        case 2:
+            editTaskTitle(selectedTask);
             break;
-        }
 
-        case 3: {
-            std::cout << "Current description: " << selectedTask->getDescription() << "\n";
-            std::cout << "Please enter a new description: ";
-
-            std::string newDescription = "";
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::getline(std::cin, newDescription);
-
-            selectedTask->setDescription(newDescription);
-            std::cout << "The description has been updated.\n\n";
+        case 3:
+            editTaskDescription(selectedTask);
             break;
-        }
 
-        case 4: {
-            std::cout << "Current due date: " << selectedTask->getDueDate() << "\n";
-            std::cout << "Please enter a new due date (DD-MM-YYYY): ";
-            
-            std::string newDueDate = "";
-            while (true) {
-                std::cin >> newDueDate;
-                if (isInputCorrectDateFormat(newDueDate)) {
-                    break;
-                }
-
-                std::cout << "Error: Invalid date format. Please try again.\n";
-            }
-
-            selectedTask->setDueDate(newDueDate);
-            std::cout << "The due date has been updated.\n\n";
+        case 4:
+            editTaskDueDate(selectedTask);
             break;
-        }
 
         case 5: {
-            std::cout << "This task has the following tags:\n";
-            for (int i = 0; i < selectedTask->getTags().size(); ++i) {
-                std::string tag = selectedTask->getTags().at(i);
-                std::cout << "<" << tag << ">";
-
-                if (i < selectedTask->getTags().size() - 1) {
-                    std::cout << ", ";
-                }
-            }
-
-            std::cout << "\n\n";
-            std::cout << "[1] Add a tag to this task\n";
-            std::cout << "[2] Remove a tag from this task\n";
-            std::cout << "Enter a number to choose your option: ";
-            int response2 = getIntInputInRange(1, 2);
-
-            switch (response2) {
-                case 1: {
-                    if (m_availableTags.empty()) {
-                        std::cout << "There are no available tags to add.\n\n";
-                        break;
-                    }
-
-                    const std::vector<std::string>& selectedTaskTags = selectedTask->getTags();
-                    std::vector<std::string> unusedTags;
-
-                    for (const auto& tag : m_availableTags) {
-                        // Filter tags that are not added to this task
-                        if (std::find(selectedTaskTags.begin(),
-                                    selectedTaskTags.end(),
-                                    tag) == selectedTaskTags.end()) {
-                            unusedTags.push_back(tag);
-                        }
-                    }
-
-                    if (unusedTags.empty()) {
-                        std::cout << "All available tags are already added to this task.\n\n";
-                        break;
-                    }
-
-                    std::cout << "Available tags to add:\n";
-                    for (int i = 1; i <= unusedTags.size(); ++i) {
-                        std::cout << "[" << i << "] " << unusedTags.at(i - 1) << "\n";
-                    }
-
-                    std::cout << "Enter a number to choose a tag to add to this task: ";
-                    int selectedTagIndex = getIntInputInRange(1, unusedTags.size()) - 1;
-                    selectedTask->addTag(unusedTags.at(selectedTagIndex));
-                    std::cout << "The tag has been added to this task.\n\n";
-                    
-                    break;
-                }
-
-                case 2: {
-                    if (selectedTask->getTags().empty()) {
-                        std::cout << "This task has no tags to remove.\n";
-                        break;
-                    }
-
-                    std::cout << "Available tags to remove:\n";
-                    for (int i = 1; i <= selectedTask->getTags().size(); ++i) {
-                        std::cout << "[" << i << "] " << selectedTask->getTags().at(i - 1) << "\n";
-                    }
-
-                    std::cout << "Enter a number to choose a tag to remove from this task: ";
-                    int selectedTagIndex = getIntInputInRange(1, selectedTask->getTags().size()) - 1;
-                    selectedTask->removeTag(selectedTask->getTags().at(selectedTagIndex));
-                    std::cout << "The tag has been removed from this task.\n\n";
-
-                    break;
-                }
-
-                default:
-                    break;
-            }
-
+            editTaskTags(selectedTask);
             break;
         }
         
         default:
-            std::cout << "Sorry, that feature has not been implemented yet.\n\n";
+            std::cout << "Error: Invalid input.\n\n";
+            break;
+    }
+}
+
+void App::editTaskTitle(Task* selectedTask) {
+    std::cout << "Current title: " << selectedTask->getTitle() << "\n";
+    std::cout << "Please enter a new title: ";
+
+    std::string newTitle = "";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, newTitle);
+
+    selectedTask->setTitle(newTitle);
+    std::cout << "The title has been updated.\n\n";
+}
+
+void App::editTaskDescription(Task* selectedTask) {
+    std::cout << "Current description: " << selectedTask->getDescription() << "\n";
+    std::cout << "Please enter a new description: ";
+
+    std::string newDescription = "";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, newDescription);
+
+    selectedTask->setDescription(newDescription);
+    std::cout << "The description has been updated.\n\n";
+}
+
+void App::editTaskDueDate(Task* selectedTask) {
+    std::cout << "Current due date: " << selectedTask->getDueDate() << "\n";
+    std::cout << "Please enter a new due date (DD-MM-YYYY): ";
+    
+    std::string newDueDate = "";
+    while (true) {
+        std::cin >> newDueDate;
+        if (isInputCorrectDateFormat(newDueDate)) {
+            break;
+        }
+
+        std::cout << "Error: Invalid date format. Please try again.\n";
+    }
+
+    selectedTask->setDueDate(newDueDate);
+    std::cout << "The due date has been updated.\n\n";
+}
+
+void App::editTaskTags(Task* selectedTask) {
+    std::cout << "This task has the following tags:\n";
+    for (int i = 0; i < selectedTask->getTags().size(); ++i) {
+        std::string tag = selectedTask->getTags().at(i);
+        std::cout << "<" << tag << ">";
+
+        if (i < selectedTask->getTags().size() - 1) {
+            std::cout << ", ";
+        }
+    }
+
+    std::cout << "\n\n";
+    std::cout << "[1] Add a tag to this task\n";
+    std::cout << "[2] Remove a tag from this task\n";
+    std::cout << "Enter a number to choose your option: ";
+    int response2 = getIntInputInRange(1, 2);
+
+    switch (response2) {
+        case 1: {
+            if (m_availableTags.empty()) {
+                std::cout << "There are no available tags to add.\n\n";
+                break;
+            }
+
+            const std::vector<std::string>& selectedTaskTags = selectedTask->getTags();
+            std::vector<std::string> unusedTags;
+
+            for (const auto& tag : m_availableTags) {
+                // Filter tags that are not added to this task
+                if (std::find(selectedTaskTags.begin(),
+                            selectedTaskTags.end(),
+                            tag) == selectedTaskTags.end()) {
+                    unusedTags.push_back(tag);
+                }
+            }
+
+            if (unusedTags.empty()) {
+                std::cout << "All available tags are already added to this task.\n\n";
+                break;
+            }
+
+            std::cout << "Available tags to add:\n";
+            for (int i = 1; i <= unusedTags.size(); ++i) {
+                std::cout << "[" << i << "] " << unusedTags.at(i - 1) << "\n";
+            }
+
+            std::cout << "Enter a number to choose a tag to add to this task: ";
+            int selectedTagIndex = getIntInputInRange(1, unusedTags.size()) - 1;
+            selectedTask->addTag(unusedTags.at(selectedTagIndex));
+            std::cout << "The tag has been added to this task.\n\n";
+            
+            break;
+        }
+
+        case 2: {
+            if (selectedTask->getTags().empty()) {
+                std::cout << "This task has no tags to remove.\n";
+                break;
+            }
+
+            std::cout << "Available tags to remove:\n";
+            for (int i = 1; i <= selectedTask->getTags().size(); ++i) {
+                std::cout << "[" << i << "] " << selectedTask->getTags().at(i - 1) << "\n";
+            }
+
+            std::cout << "Enter a number to choose a tag to remove from this task: ";
+            int selectedTagIndex = getIntInputInRange(1, selectedTask->getTags().size()) - 1;
+            selectedTask->removeTag(selectedTask->getTags().at(selectedTagIndex));
+            std::cout << "The tag has been removed from this task.\n\n";
+
+            break;
+        }
+
+        default:
             break;
     }
 }
@@ -414,7 +424,7 @@ void App::sortTasks() {
             break;
         
         default:
-            std::cout << "Sorry, that feature has not been implemented yet.\n\n";
+            std::cout << "Error: Invalid input.\n\n";
             break;
     }
 
@@ -494,7 +504,7 @@ void App::filterTasks() {
         }
         
         default:
-            std::cout << "Sorry, that feature has not been implemented yet.\n\n";
+            std::cout << "Error: Invalid input.\n\n";
             break;
     }
 
