@@ -32,8 +32,6 @@ public:
 
 private:
     void setDateAndTimeCreated();
-
-    int m_id;
     
     std::string m_title;
     std::string m_description;

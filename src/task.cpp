@@ -5,8 +5,7 @@
 #include <ctime>
 
 Task::Task()
-    : m_id(-1)
-    , m_title("")
+    : m_title("")
     , m_description("")
     , m_dateCreated("")
     , m_timeCreated("")
