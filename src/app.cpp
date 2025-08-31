@@ -255,18 +255,31 @@ void App::editTask() {
                     break;
                 }
 
-                std::cout << "Available tags to add:\n";
-                for (int i = 1; i <= m_availableTags.size(); ++i) {
-                    std::cout << "[" << i << "] " << m_availableTags.at(i - 1) << "\n";
+                const std::vector<std::string>& selectedTaskTags = selectedTask->getTags();
+                std::vector<std::string> unusedTags;
+
+                for (const auto& tag : m_availableTags) {
+                    // Filter tags that are not added to this task
+                    if (std::find(selectedTaskTags.begin(),
+                                  selectedTaskTags.end(),
+                                  tag) == selectedTaskTags.end()) {
+                        unusedTags.push_back(tag);
+                    }
                 }
 
-                // TODO: Prevent user from adding duplicate tags
-                // ...
+                if (unusedTags.empty()) {
+                    std::cout << "All available tags are already added to this task.\n\n";
+                    break;
+                }
+
+                std::cout << "Available tags to add:\n";
+                for (int i = 1; i <= unusedTags.size(); ++i) {
+                    std::cout << "[" << i << "] " << unusedTags.at(i - 1) << "\n";
+                }
 
                 std::cout << "Enter a number to choose a tag to add to this task: ";
-                int selectedTagIndex = getIntInputInRange(1, m_availableTags.size());
-                
-                selectedTask->addTag(m_availableTags.at(selectedTagIndex - 1));
+                int selectedTagIndex = getIntInputInRange(1, unusedTags.size()) - 1;
+                selectedTask->addTag(unusedTags.at(selectedTagIndex));
                 std::cout << "The tag has been added to this task.\n\n";
                 
                 break;
