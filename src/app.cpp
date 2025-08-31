@@ -349,10 +349,17 @@ void App::createTag() {
     std::cout << "Enter new tag name: ";
     std::cin >> newTag;
 
-    // TODO: Prevent duplicate tags from existing
-    // ...
+    // Prevent creation of duplicate tags
+    if (std::find(m_availableTags.begin(),
+                  m_availableTags.end(),
+                  newTag) != m_availableTags.end()) {
+        std::cout << "\n";
+        std::cout << "This tag already exists.\n\n";
+        return;
+    }
 
     m_availableTags.push_back(newTag);
+    std::cout << "\n";
     std::cout << "The tag has been created.\n\n";
 }
 
