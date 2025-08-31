@@ -21,9 +21,6 @@ App::~App() {
 }
 
 void App::run() {
-    // TODO: Create user
-    // ..
-
     // For testing
     Task* task1 = new Task();
     task1->setTitle("Task 1");
