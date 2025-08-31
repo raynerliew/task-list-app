@@ -240,6 +240,7 @@ void App::editTaskTitle(Task* selectedTask) {
     std::getline(std::cin, newTitle);
 
     selectedTask->setTitle(newTitle);
+    std::cout << "\n";
     std::cout << "The title has been updated.\n\n";
 }
 
@@ -252,6 +253,7 @@ void App::editTaskDescription(Task* selectedTask) {
     std::getline(std::cin, newDescription);
 
     selectedTask->setDescription(newDescription);
+    std::cout << "\n";
     std::cout << "The description has been updated.\n\n";
 }
 
@@ -270,21 +272,29 @@ void App::editTaskDueDate(Task* selectedTask) {
     }
 
     selectedTask->setDueDate(newDueDate);
+    std::cout << "\n";
     std::cout << "The due date has been updated.\n\n";
 }
 
 void App::editTaskTags(Task* selectedTask) {
-    std::cout << "This task has the following tags:\n";
-    for (int i = 0; i < selectedTask->getTags().size(); ++i) {
-        std::string tag = selectedTask->getTags().at(i);
-        std::cout << "<" << tag << ">";
+    if (selectedTask->getTags().empty()) {
+        std::cout << "This task has no tags.\n";
+    }
+    else {
+        std::cout << "This task has the following tags:\n";
+        for (int i = 0; i < selectedTask->getTags().size(); ++i) {
+            std::string tag = selectedTask->getTags().at(i);
+            std::cout << "<" << tag << ">";
 
-        if (i < selectedTask->getTags().size() - 1) {
-            std::cout << ", ";
+            if (i < selectedTask->getTags().size() - 1) {
+                std::cout << ", ";
+            }
         }
+
+        std::cout << "\n";
     }
 
-    std::cout << "\n\n";
+    std::cout << "\n";
     std::cout << "[1] Add a tag to this task\n";
     std::cout << "[2] Remove a tag from this task\n";
     std::cout << "Enter a number to choose your option: ";
@@ -329,7 +339,7 @@ void App::editTaskTags(Task* selectedTask) {
 
         case 2: {
             if (selectedTask->getTags().empty()) {
-                std::cout << "This task has no tags to remove.\n";
+                std::cout << "This task has no tags to remove.\n\n";
                 break;
             }
 
@@ -355,7 +365,7 @@ void App::deleteTask() {
     std::cout << "----- Delete a task -----\n";
     
     if (m_taskList.empty()) {
-        std::cout << "There are no tasks to delete.\n\n";
+        std::cout << "No tasks have been created yet.\n\n";
         return;
     }
 
@@ -400,6 +410,11 @@ void App::createTag() {
 void App::sortTasks() {
     std::cout << "----- Sort tasks -----\n";
 
+    if (m_taskList.empty()) {
+        std::cout << "No tasks have been created yet.\n\n";
+        return;
+    }
+
     std::cout << "\n";
     std::cout << "[1] Sort by completion status\n";
     std::cout << "[2] Sort by due date\n";
@@ -435,6 +450,11 @@ void App::sortTasks() {
 
 void App::filterTasks() {
     std::cout << "----- Filter tasks -----\n";
+
+    if (m_taskList.empty()) {
+        std::cout << "No tasks have been created yet.\n\n";
+        return;
+    }
 
     std::cout << "\n";
     std::cout << "[1] Filter by completion status\n";
@@ -525,6 +545,11 @@ void App::filterTasks() {
 
 void App::searchTasks() {
     std::cout << "----- Search tasks -----\n";
+
+    if (m_taskList.empty()) {
+        std::cout << "No tasks have been created yet.\n\n";
+        return;
+    }
 
     std::cout << "\n";
     std::cout << "Enter a task title to search for: ";
