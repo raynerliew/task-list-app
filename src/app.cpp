@@ -354,9 +354,13 @@ void App::deleteTask() {
 void App::createTag() {
     std::cout << "----- Create a tag -----\n";
 
-    std::cout << "Existing tags:\n";
-    for (int i = 1; i <= m_availableTags.size(); ++i) {
-        std::cout << "[" << i << "] " << m_availableTags.at(i - 1) << "\n";
+    if (m_availableTags.empty()) {
+        std::cout << "No tags have been created yet.\n";
+    } else {
+        std::cout << "Existing tags:\n";
+        for (int i = 1; i <= m_availableTags.size(); ++i) {
+            std::cout << "[" << i << "] " << m_availableTags.at(i - 1) << "\n";
+        }
     }
 
     std::string newTag = "";
