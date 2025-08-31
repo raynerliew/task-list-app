@@ -69,21 +69,19 @@ void App::run() {
 }
 
 int App::showMainMenu() {
-    while (true) {
-        std::cout << "Hello! Welcome to task-list-app.\n";
-        std::cout << "[1] Show all tasks\n";
-        std::cout << "[2] Create a task\n";
-        std::cout << "[3] Edit a task\n";
-        std::cout << "[4] Delete a task\n";
-        std::cout << "[5] Create a tag\n";
-        std::cout << "[6] Sort tasks\n";
-        std::cout << "[7] Filter tasks\n";
-        std::cout << "[8] Search for tasks\n";
-        std::cout << "[0] Exit\n";
-        std::cout << "Enter a number to choose your option: ";
+    std::cout << "Hello! Welcome to task-list-app.\n";
+    std::cout << "[1] Show all tasks\n";
+    std::cout << "[2] Create a task\n";
+    std::cout << "[3] Edit a task\n";
+    std::cout << "[4] Delete a task\n";
+    std::cout << "[5] Create a tag\n";
+    std::cout << "[6] Sort tasks\n";
+    std::cout << "[7] Filter tasks\n";
+    std::cout << "[8] Search for tasks\n";
+    std::cout << "[0] Exit\n";
+    std::cout << "Enter a number to choose your option: ";
 
-        return getIntInputInRange(0, 8);
-    }
+    return getIntInputInRange(0, 8);
 }
 
 void App::showAllTasks(bool showTaskTitleOnly, bool showHeader) {
