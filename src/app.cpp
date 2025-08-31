@@ -21,8 +21,6 @@ App::~App() {
 }
 
 void App::run() {
-    createSampleTasksAndTags();
-
     while (true) {
         int response = showMainMenu();
 
