@@ -61,10 +61,14 @@ task-list-app/
 
 ### Build and Run
 1. Open the command prompt and navigate to the project's root directory<br>
-`cd task-list-app`
+```
+cd task-list-app
+```
 
 2. In the command prompt, run the following command<br>
-`build.bat`
+```
+build.bat
+```
 
 The executable will be created in the build/ folder and launched automatically.
 
