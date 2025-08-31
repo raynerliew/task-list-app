@@ -389,6 +389,11 @@ void App::sortTasks() {
         return;
     }
 
+    if (m_taskList.size() == 1) {
+        showAllTasks(false, false);
+        return;
+    }
+
     std::cout << "\n";
     std::cout << "[1] Sort by completion status\n";
     std::cout << "[2] Sort by due date\n";
