@@ -75,7 +75,9 @@ The executable will be created in the build/ folder and launched automatically.
 
 ## Testing
 Sample tasks and tags can be created for ease of testing by uncommenting the following line in main.cpp<br>
-`//taskListApp.createSampleTasksAndTags();`
+```
+//taskListApp.createSampleTasksAndTags();
+```
 
 The app has been tested to handle invalid input, such as entering an invalid option number when navigating the menu and when entering a due date.
 
