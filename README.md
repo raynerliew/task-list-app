@@ -64,7 +64,8 @@ task-list-app/
 
 #### Not Using The Command Prompt
 1. Double click the build.bat batch file located in the project's root directory
-2. The executable will be created in the build/ folder and launched automatically
+
+The executable will be created in the build/ folder and launched automatically
 
 #### Using The Command Prompt
 
