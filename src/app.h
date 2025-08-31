@@ -29,12 +29,13 @@ private:
     void sortTasks();
     void filterTasks();
     void searchTasks();
-
-
+    
     // Helper functions
     bool isInputCorrectDateFormat(const std::string& input);
     int getIntInputInRange(int min, int max) const;
     std::tm parseDate(const std::string& date);
+    
+    void createSampleTasksAndTags();
 
     std::vector<Task*> m_taskList;
     std::vector<std::string> m_availableTags;

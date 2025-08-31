@@ -21,35 +21,7 @@ App::~App() {
 }
 
 void App::run() {
-    // For testing
-    Task* task1 = new Task();
-    task1->setTitle("Task 1");
-    task1->setDescription("I am task 1");
-    task1->setDueDate("01-01-2025");
-    task1->addTag("tag1");
-    task1->addTag("tag2");
-    task1->addTag("tag3");
-    task1->setCompletionStatus(true);
-    m_taskList.push_back(task1);
-
-    Task* task2 = new Task();
-    task2->setTitle("Task 2");
-    task2->setDescription("Task 2 is me");
-    task2->setDueDate("02-02-2025");
-    task2->addTag("tag2");
-    m_taskList.push_back(task2);
-
-    Task* task3 = new Task();
-    task3->setTitle("Task 3");
-    task3->setDescription("Task 3 here");
-    task3->setDueDate("03-03-2020");
-    task3->addTag("tag3");
-    m_taskList.push_back(task3);
-
-    m_availableTags.push_back("tag1");
-    m_availableTags.push_back("tag2");
-    m_availableTags.push_back("tag3");
-    // End of testing
+    createSampleTasksAndTags();
 
     while (true) {
         int response = showMainMenu();
@@ -625,4 +597,34 @@ std::tm App::parseDate(const std::string& date) {
     std::istringstream ss(date);
     ss >> std::get_time(&tm, "%d-%m-%Y");
     return tm;
+}
+
+void App::createSampleTasksAndTags() {
+    m_availableTags.push_back("tag1");
+    m_availableTags.push_back("tag2");
+    m_availableTags.push_back("tag3");
+
+    Task* task1 = new Task();
+    task1->setTitle("Task 1");
+    task1->setDescription("I am task 1");
+    task1->setDueDate("01-01-2025");
+    task1->addTag("tag1");
+    task1->addTag("tag2");
+    task1->addTag("tag3");
+    task1->setCompletionStatus(true);
+    m_taskList.push_back(task1);
+
+    Task* task2 = new Task();
+    task2->setTitle("Task 2");
+    task2->setDescription("Task 2 is me");
+    task2->setDueDate("02-02-2025");
+    task2->addTag("tag2");
+    m_taskList.push_back(task2);
+
+    Task* task3 = new Task();
+    task3->setTitle("Task 3");
+    task3->setDescription("Task 3 here");
+    task3->setDueDate("03-03-2020");
+    task3->addTag("tag3");
+    m_taskList.push_back(task3);
 }
