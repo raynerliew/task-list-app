@@ -91,4 +91,4 @@ The app is also able to handle an empty task list, an empty tag list, as well as
 
 ### 7 Minute Video
 A video that fully demonstrates the app's features can be found here:<br>
-https://github.com/raynerliew/task-list-app/media/demo.mp4
+https://github.com/raynerliew/task-list-app/blob/main/media/demo.mp4
