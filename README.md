@@ -36,13 +36,19 @@ Users can perform the following actions:
 ## Project Structure
 ```
 task-list-app/
-│   .gitignore
 │   build.bat
 │   README.md
 │
 ├───.vscode
 │       c_cpp_properties.json
 │       settings.json
+│
+├───build
+│       task-list-app.exe
+│
+├───media
+│       demo.gif
+│       demo.mp4
 │
 └───src
         app.cpp
@@ -62,12 +68,15 @@ task-list-app/
 
 ### Build and Run
 
-#### Not Using The Command Prompt
+#### Running the pre-built executable
+For convenience, the task-list-app.exe is included in the build/ folder
+
+#### Build and Run Without Using The Command Prompt
 1. Double click the build.bat batch file located in the project's root directory
 
 The executable will be created in the build/ folder and launched automatically
 
-#### Using The Command Prompt
+#### Build and Run Using The Command Prompt
 
 1. Open a command prompt and navigate to the project's root directory<br>
 ```
