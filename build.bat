@@ -5,5 +5,3 @@ if not exist build (
 
 g++ src/*.cpp -o build/task-list-app.exe
 .\build\task-list-app.exe
-
-pause

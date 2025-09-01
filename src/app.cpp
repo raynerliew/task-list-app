@@ -18,8 +18,6 @@ App::~App() {
     }
 
     m_taskList.clear();
-
-    std::cout << "Thank you for using task-list-app! Goodbye!\n";
 }
 
 void App::run() {
@@ -68,6 +66,10 @@ void App::run() {
             break;
         }
     }
+}
+
+void App::close() {
+    std::cout << "Thank you for using task-list-app! Goodbye!\n";
 }
 
 int App::showMainMenu() {

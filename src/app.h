@@ -12,6 +12,7 @@ public:
     ~App();
 
     void run();
+    void close();
     void createSampleTasksAndTags();
 
 private:
